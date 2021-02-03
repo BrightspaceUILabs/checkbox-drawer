@@ -13,6 +13,16 @@ const states = {
 	EXPANDED: 'expanded', // fully expanded
 };
 
+const opacities = {
+	HIDDEN: '0',
+	VISIBLE: '1'
+}
+
+const transforms = {
+	OUT_OF_VIEW: 'translateY(-0.9rem)',
+	ORIGIN: 'translateY(0%)'
+}
+
 class CheckboxWithDrawer extends LitElement {
 
 	static get properties() {
@@ -45,15 +55,11 @@ class CheckboxWithDrawer extends LitElement {
 			.d2l-expand-collapse-content-fade {
 				overflow: hidden;
 				position: absolute;
-				transition: all 500ms cubic-bezier(0, 0.7, 0.5, 1);
+				transition: all 400ms cubic-bezier(0, 0.7, 0.5, 1);
 			}
 
 			.d2l-expand-collapse-content-fade:not([data-state="collapsed"]) {
 				position: static;
-			}
-
-			.d2l-expand-collapse-content-fade[data-state="expanded"] {
-				overflow: visible;
 			}
 		`;
 	}
@@ -61,8 +67,8 @@ class CheckboxWithDrawer extends LitElement {
 	constructor() {
 		super();
 		this.checked = false;
-		this._opacity = '0';
-		this._transform = 'translateY(-10px)';
+		this._opacity = opacities.HIDDEN;
+		this._transform = transforms.OUT_OF_VIEW;
 		this._isFirstUpdate = true;
 		this._state = states.COLLAPSED;
 	}
@@ -79,15 +85,15 @@ class CheckboxWithDrawer extends LitElement {
 		if (changedProperties.has('checked')) {
 			if (this.checked) {
 				this._state = states.EXPANDED;
-				this._opacity = '1';
-				this._transform = 'translateY(0%)';
+				this._opacity = opacities.VISIBLE;
+				this._transform = transforms.ORIGIN;
 			} else {
 				if (this._isFirstUpdate) {
 					this._state = states.COLLAPSED;
 				} else {
 					this._state = states.COLLAPSING;
-					this._opacity = '0';
-					this._transform = 'translateY(-10px)';
+					this._opacity = opacities.HIDDEN;
+					this._transform = transforms.OUT_OF_VIEW;
 				}
 			}
 			this._isFirstUpdate = false;
