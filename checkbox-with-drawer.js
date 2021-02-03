@@ -61,6 +61,17 @@ class CheckboxWithDrawer extends LitElement {
 			.d2l-expand-collapse-content-fade:not([data-state="collapsed"]) {
 				position: static;
 			}
+
+			.d2l-expand-collapse-content-fade[data-state="expanded"] {
+				overflow: visible;
+			}
+
+			/* prevent margin collapse on slotted children */
+			.d2l-expand-collapse-content-fade-inner::before,
+			.d2l-expand-collapse-content-fade-inner::after {
+				content: ' ';
+				display: table;
+			}
 		`;
 	}
 
@@ -113,7 +124,9 @@ class CheckboxWithDrawer extends LitElement {
 			</d2l-input-checkbox-spacer>
 			<d2l-input-checkbox-spacer>
 				<div class="d2l-expand-collapse-content-fade" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
-					<slot></slot>
+					<div class="d2l-expand-collapse-content-fade-inner">
+						<slot></slot>
+					</div>
 				</div>
 			</d2l-input-checkbox-spacer>
 		`;
