@@ -33,7 +33,9 @@ class CheckboxWithDrawer extends LitElement {
 
 	static get properties() {
 		return {
-			checked: { type: Boolean },
+			checked: { type: Boolean},
+			description: { type: String},
+			label: { type: String},
 			_opacity: { type: String },
 			_transform: { type: String },
 			_state: { type: String },
@@ -103,6 +105,8 @@ class CheckboxWithDrawer extends LitElement {
 
 	firstUpdated() {
 		const checkbox = this.shadowRoot.querySelector('.d2l-input-checkbox');
+		// pass initial checked value down to the checkbox
+		checkbox.checked = this.checked;
 		checkbox.addEventListener('change', (e) => {
 			this.checked = checkbox.checked;
 		});
@@ -165,9 +169,14 @@ class CheckboxWithDrawer extends LitElement {
 		};
 		return html`
 			<div class="d2l-checkbox-with-drawer-container">
-				<d2l-input-checkbox class="d2l-input-checkbox">Make this course available in Discover so Learners can self-enroll</d2l-input-checkbox>
+				<d2l-input-checkbox
+					class="d2l-input-checkbox",
+
+				>
+					${this.label}
+				</d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<div class="d2l-input-checkbox-description">Inactive courses will not be included in Discover</div>
+					<div class="d2l-input-checkbox-description">${this.description}</div>
 				</d2l-input-checkbox-spacer>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-expand-collapse-content" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
