@@ -1,15 +1,17 @@
+import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox-spacer.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
 import { styleMap } from 'lit-html/directives/style-map.js';
 
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const states = {
-	// PRECOLLAPSING: 'precollapsing', // setting up the styles so the collapse transition will run
+	PRECOLLAPSING: 'precollapsing', // setting up the styles so the collapse transition will run
 	COLLAPSING: 'collapsing', // in the process of collapsing
 	COLLAPSED: 'collapsed', // fully collapsed
-	// PREEXPANDING: 'preexpanding', // setting up the styles so the expand transition will run
-	// EXPANDING: 'expanding', // in the process of expanding
+	PREEXPANDING: 'preexpanding', // setting up the styles so the expand transition will run
+	EXPANDING: 'expanding', // in the process of expanding
 	EXPANDED: 'expanded', // fully expanded
 };
 
@@ -23,6 +25,10 @@ const transforms = {
 	ORIGIN: 'translateY(0%)'
 }
 
+const heights = {
+	NONE: '0'
+}
+
 class CheckboxWithDrawer extends LitElement {
 
 	static get properties() {
@@ -30,45 +36,55 @@ class CheckboxWithDrawer extends LitElement {
 			checked: { type: Boolean },
 			_opacity: { type: String },
 			_transform: { type: String },
-			_state: { type: String }
+			_state: { type: String },
+			_height: { type: String }
 		};
 	}
 
 	static get styles() {
 		return css`
 			:host {
-				display: inline-block;
+				display: block;
 			}
 
 			:host([hidden]) {
 				display: none;
 			}
 
-			.d2l-input-checkbox {
+			.d2l-checkbox-with-drawer-container {
+				margin-bottom: 18px;
+			}
+
+			.d2l-input-checkbox, .d2l-input-checkbox-spacer {
 				margin-bottom: 0;
 			}
 
 			.d2l-input-checkbox-description {
-				font-size: 0.7em;
+				color: var(--d2l-color-tungsten);
+				font-size: 0.7rem;
 			}
 
-			.d2l-expand-collapse-content-fade {
+			.checkbox-content-margin {
+				margin-top: 18px
+			}
+
+			.d2l-expand-collapse-content {
+				display: none;
 				overflow: hidden;
-				position: absolute;
 				transition: all 400ms cubic-bezier(0, 0.7, 0.5, 1);
 			}
 
-			.d2l-expand-collapse-content-fade:not([data-state="collapsed"]) {
-				position: static;
+			.d2l-expand-collapse-content:not([data-state="collapsed"]) {
+				display: block;
 			}
 
-			.d2l-expand-collapse-content-fade[data-state="expanded"] {
+			.d2l-expand-collapse-content[data-state="expanded"] {
 				overflow: visible;
 			}
 
 			/* prevent margin collapse on slotted children */
-			.d2l-expand-collapse-content-fade-inner::before,
-			.d2l-expand-collapse-content-fade-inner::after {
+			.d2l-expand-collapse-content-inner::before,
+			.d2l-expand-collapse-content-inner::after {
 				content: ' ';
 				display: table;
 			}
@@ -82,6 +98,7 @@ class CheckboxWithDrawer extends LitElement {
 		this._transform = transforms.OUT_OF_VIEW;
 		this._isFirstUpdate = true;
 		this._state = states.COLLAPSED;
+		this._height = heights.NONE;
 	}
 
 	firstUpdated() {
@@ -94,46 +111,80 @@ class CheckboxWithDrawer extends LitElement {
 	updated(changedProperties) {
 		super.updated(changedProperties);
 		if (changedProperties.has('checked')) {
-			if (this.checked) {
+			this._drawerChanged(this.checked, this.isFirstUpdate);
+			this._isFirstUpdate = false;
+		}
+	}
+
+	async _drawerChanged(checked, isFirstUpdate) {
+		if (checked) {
+			if (reduceMotion || isFirstUpdate) {
 				this._state = states.EXPANDED;
 				this._opacity = opacities.VISIBLE;
 				this._transform = transforms.ORIGIN;
+				this._height = 'auto';
 			} else {
-				if (this._isFirstUpdate) {
-					this._state = states.COLLAPSED;
-				} else {
+				this._state = states.PREEXPANDING;
+				await this.updateComplete;
+				await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+				if (this._state === states.PREEXPANDING) {
+					const content = this.shadowRoot.querySelector('.d2l-expand-collapse-content-inner');
+					this._state = states.EXPANDING;
+					this._opacity = opacities.VISIBLE;
+					this._transform = transforms.ORIGIN;
+					this._height = `${content.scrollHeight}px`;
+				}
+			}
+		} else {
+			if (reduceMotion || isFirstUpdate) {
+				this._state = states.COLLAPSED;
+				this._opacity = opacities.HIDDEN;
+				this._transform = transforms.OUT_OF_VIEW;
+				this._height = heights.NONE;
+			} else {
+				this._state = states.PRECOLLAPSING;
+				const content = this.shadowRoot.querySelector('.d2l-expand-collapse-content-inner');
+				this._height = `${content.scrollHeight}px`;
+				await this.updateComplete;
+				await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
+				if (this._state === states.PRECOLLAPSING) {
 					this._state = states.COLLAPSING;
 					this._opacity = opacities.HIDDEN;
 					this._transform = transforms.OUT_OF_VIEW;
+					this._height = heights.NONE;
 				}
 			}
-			this._isFirstUpdate = false;
 		}
 	}
 
 	render() {
 		const styles = {
 			opacity: this._opacity,
-			transform: this._transform
+			transform: this._transform,
+			height: this._height
 		};
 		return html`
-			<d2l-input-checkbox class="d2l-input-checkbox">Label for checkbox</d2l-input-checkbox>
-			<d2l-input-checkbox-spacer>
-				<div class="d2l-input-checkbox-description">Additional content can go here and will
-				line up nicely with the edge of the checkbox.</div>
-			</d2l-input-checkbox-spacer>
-			<d2l-input-checkbox-spacer>
-				<div class="d2l-expand-collapse-content-fade" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
-					<div class="d2l-expand-collapse-content-fade-inner">
-						<slot></slot>
+			<div class="d2l-checkbox-with-drawer-container">
+				<d2l-input-checkbox class="d2l-input-checkbox">Make this course available in Discover so Learners can self-enroll</d2l-input-checkbox>
+				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+					<div class="d2l-input-checkbox-description">Inactive courses will not be included in Discover</div>
+				</d2l-input-checkbox-spacer>
+				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+					<div class="d2l-expand-collapse-content" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
+						<div class="d2l-expand-collapse-content-inner">
+							<div class="checkbox-content-margin"></div>
+							<slot></slot>
+						</div>
 					</div>
-				</div>
-			</d2l-input-checkbox-spacer>
+				</d2l-input-checkbox-spacer>
+			</div>
 		`;
 	}
 
 	_onTransitionEnd() {
-		if (this._state == states.COLLAPSING) {
+		if (this._state === states.EXPANDING) {
+			this._state = states.EXPANDED;
+		} if (this._state === states.COLLAPSING) {
 			this._state = states.COLLAPSED;
 		}
 	}
