@@ -6,11 +6,6 @@
 		<script type="module">
 			import '@brightspace-ui/core/components/demo/demo-page.js';
 			import '../checkbox-drawer.js';
-
-			const content = document.body.querySelector('d2l-labs-checkbox-drawer');
-			content.addEventListener('d2l-checkbox-drawer-change-checked', (e) => {
-				console.log(content.checked)
-			});
 		</script>
 		<title>CheckboxDrawer</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,9 +18,8 @@
 				<d2l-labs-checkbox-drawer
 					label="Make this course available in Discover so Learners can self-enroll",
 					description="Inactive courses will not be included in Discover",
-					checked
 				>
-					<button>CONTENT</button><p>CONTENT</p><p>CONTENT</p><div style="margin: 20px;">MARGIN</div>
+					<button>CONTENT</button><p>CONTENT</p><p>CONTENT</p>
 				</d2l-labs-checkbox-drawer>
 				<div>PLACEHOLDER</div>
 			</d2l-demo-snippet>

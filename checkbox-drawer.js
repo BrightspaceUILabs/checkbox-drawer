@@ -18,24 +18,24 @@ const states = {
 const opacities = {
 	HIDDEN: '0',
 	VISIBLE: '1'
-}
+};
 
 const transforms = {
 	OUT_OF_VIEW: 'translateY(-0.9rem)',
 	ORIGIN: 'translateY(0%)'
-}
+};
 
 const heights = {
 	NONE: '0'
-}
+};
 
 class CheckboxDrawer extends LitElement {
 
 	static get properties() {
 		return {
-			checked: { type: Boolean},
-			description: { type: String},
-			label: { type: String},
+			checked: { type: Boolean },
+			description: { type: String },
+			label: { type: String },
 			_opacity: { type: String },
 			_transform: { type: String },
 			_height: { type: String },
@@ -66,8 +66,8 @@ class CheckboxDrawer extends LitElement {
 				font-size: 0.7rem;
 			}
 
-			.checkbox-content-margin {
-				margin-top: 18px
+			.d2l-checkbox-content-margin {
+				margin-top: 18px;
 			}
 
 			.d2l-expand-collapse-content {
@@ -107,13 +107,37 @@ class CheckboxDrawer extends LitElement {
 		const checkbox = this.shadowRoot.querySelector('.d2l-input-checkbox');
 		// pass initial checked value down to the checkbox
 		checkbox.checked = this.checked;
-		checkbox.addEventListener('change', (e) => {
+		checkbox.addEventListener('change', () => {
 			this.checked = checkbox.checked;
 			this.dispatchEvent(new CustomEvent(
 				'd2l-checkbox-drawer-change-checked',
 				{ bubbles: true, composed: false }
-			))
+			));
 		});
+	}
+
+	render() {
+		const styles = {
+			opacity: this._opacity,
+			transform: this._transform,
+			height: this._height
+		};
+		return html`
+			<div class="d2l-checkbox-drawer-container">
+				<d2l-input-checkbox class="d2l-input-checkbox">${this.label}</d2l-input-checkbox>
+				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+					<div class="d2l-input-checkbox-description">${this.description}</div>
+				</d2l-input-checkbox-spacer>
+				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+					<div class="d2l-expand-collapse-content" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
+						<div class="d2l-expand-collapse-content-inner">
+							<div class="d2l-checkbox-content-margin"></div>
+							<slot></slot>
+						</div>
+					</div>
+				</d2l-input-checkbox-spacer>
+			</div>
+		`;
 	}
 
 	updated(changedProperties) {
@@ -171,30 +195,6 @@ class CheckboxDrawer extends LitElement {
 				}
 			}
 		}
-	}
-
-	render() {
-		const styles = {
-			opacity: this._opacity,
-			transform: this._transform,
-			height: this._height
-		};
-		return html`
-			<div class="d2l-checkbox-drawer-container">
-				<d2l-input-checkbox class="d2l-input-checkbox">${this.label}</d2l-input-checkbox>
-				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<div class="d2l-input-checkbox-description">${this.description}</div>
-				</d2l-input-checkbox-spacer>
-				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<div class="d2l-expand-collapse-content" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
-						<div class="d2l-expand-collapse-content-inner">
-							<div class="checkbox-content-margin"></div>
-							<slot></slot>
-						</div>
-					</div>
-				</d2l-input-checkbox-spacer>
-			</div>
-		`;
 	}
 
 	_onTransitionEnd() {
