@@ -2,6 +2,7 @@ import '@brightspace-ui/core/components/colors/colors.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox.js';
 import '@brightspace-ui/core/components/inputs/input-checkbox-spacer.js';
 import { css, html, LitElement } from 'lit-element/lit-element.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { styleMap } from 'lit-html/directives/style-map.js';
 
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -126,7 +127,7 @@ class CheckboxDrawer extends LitElement {
 		return html`
 			<div class="d2l-checkbox-drawer-container">
 				<d2l-input-checkbox
-					aria-label="${(this.ariaLabel)}"
+					aria-label="${ifDefined(this.ariaLabel)}"
 					class="d2l-input-checkbox"
 				>
 					${this.label}

@@ -6,7 +6,7 @@ describe('CheckboxDrawer', () => {
 
 	describe('accessibility', () => {
 		it('should pass all aXe tests', async() => {
-			const el = await fixture(html`<d2l-labs-checkbox-drawer></d2l-labs-checkbox-drawer>`);
+			const el = await fixture(html`<d2l-labs-checkbox-drawer label="Label"></d2l-labs-checkbox-drawer>`);
 			await expect(el).to.be.accessible();
 		});
 	});
