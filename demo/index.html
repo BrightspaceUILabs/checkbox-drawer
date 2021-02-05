@@ -8,10 +8,9 @@
 			import '../checkbox-with-drawer.js';
 
 			const content = document.body.querySelector('d2l-labs-checkbox-with-drawer');
-			console.log(content)
-			content.addEventListener('d2l-checkbox-with-drawer-expand', (e) => {
-			console.log(content.checked)
-		});
+			content.addEventListener('d2l-checkbox-with-drawer-change-checked', (e) => {
+				console.log(content.checked)
+			});
 		</script>
 		<title>CheckboxWithDrawer</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
