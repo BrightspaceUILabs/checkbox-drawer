@@ -109,6 +109,10 @@ class CheckboxWithDrawer extends LitElement {
 		checkbox.checked = this.checked;
 		checkbox.addEventListener('change', (e) => {
 			this.checked = checkbox.checked;
+			this.dispatchEvent(new CustomEvent(
+				'd2l-checkbox-with-drawer-change-checked',
+				{ bubbles: true, composed: false }
+			))
 		});
 	}
 
@@ -122,6 +126,12 @@ class CheckboxWithDrawer extends LitElement {
 
 	async _drawerChanged(checked, isFirstUpdate) {
 		if (checked) {
+			if (!isFirstUpdate) {
+				this.dispatchEvent(new CustomEvent(
+					'd2l-checkbox-with-drawer-expand',
+					{ bubbles: true, composed: false }
+				));
+			}
 			if (reduceMotion || isFirstUpdate) {
 				this._state = states.EXPANDED;
 				this._opacity = opacities.VISIBLE;
@@ -130,7 +140,6 @@ class CheckboxWithDrawer extends LitElement {
 			} else {
 				this._state = states.PREEXPANDING;
 				await this.updateComplete;
-				await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 				if (this._state === states.PREEXPANDING) {
 					const content = this.shadowRoot.querySelector('.d2l-expand-collapse-content-inner');
 					this._state = states.EXPANDING;
@@ -140,6 +149,12 @@ class CheckboxWithDrawer extends LitElement {
 				}
 			}
 		} else {
+			if (!isFirstUpdate) {
+				this.dispatchEvent(new CustomEvent(
+					'd2l-checkbox-with-drawer-collapse',
+					{ bubbles: true, composed: false }
+				));
+			}
 			if (reduceMotion || isFirstUpdate) {
 				this._state = states.COLLAPSED;
 				this._opacity = opacities.HIDDEN;
@@ -147,10 +162,7 @@ class CheckboxWithDrawer extends LitElement {
 				this._height = heights.NONE;
 			} else {
 				this._state = states.PRECOLLAPSING;
-				const content = this.shadowRoot.querySelector('.d2l-expand-collapse-content-inner');
-				this._height = `${content.scrollHeight}px`;
 				await this.updateComplete;
-				await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))
 				if (this._state === states.PRECOLLAPSING) {
 					this._state = states.COLLAPSING;
 					this._opacity = opacities.HIDDEN;
@@ -169,12 +181,7 @@ class CheckboxWithDrawer extends LitElement {
 		};
 		return html`
 			<div class="d2l-checkbox-with-drawer-container">
-				<d2l-input-checkbox
-					class="d2l-input-checkbox",
-
-				>
-					${this.label}
-				</d2l-input-checkbox>
+				<d2l-input-checkbox class="d2l-input-checkbox">${this.label}</d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-input-checkbox-description">${this.description}</div>
 				</d2l-input-checkbox-spacer>
