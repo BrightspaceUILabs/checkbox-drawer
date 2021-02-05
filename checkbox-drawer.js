@@ -33,6 +33,7 @@ class CheckboxDrawer extends LitElement {
 
 	static get properties() {
 		return {
+			ariaLabel: { type: String, attribute: 'aria-label' },
 			checked: { type: Boolean },
 			description: { type: String },
 			label: { type: String },
@@ -124,7 +125,12 @@ class CheckboxDrawer extends LitElement {
 		};
 		return html`
 			<div class="d2l-checkbox-drawer-container">
-				<d2l-input-checkbox class="d2l-input-checkbox">${this.label}</d2l-input-checkbox>
+				<d2l-input-checkbox
+					aria-label="${(this.ariaLabel)}"
+					class="d2l-input-checkbox"
+				>
+					${this.label}
+				</d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-input-checkbox-description">${this.description}</div>
 				</d2l-input-checkbox-spacer>
