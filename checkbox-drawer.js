@@ -109,13 +109,6 @@ class CheckboxDrawer extends LitElement {
 		const checkbox = this.shadowRoot.querySelector('.d2l-input-checkbox');
 		// pass initial checked value down to the checkbox
 		checkbox.checked = this.checked;
-		checkbox.addEventListener('change', () => {
-			this.checked = checkbox.checked;
-			this.dispatchEvent(new CustomEvent(
-				'd2l-checkbox-drawer-change-checked',
-				{ bubbles: true, composed: false }
-			));
-		});
 	}
 
 	render() {
@@ -126,7 +119,7 @@ class CheckboxDrawer extends LitElement {
 		};
 		return html`
 			<div class="d2l-checkbox-drawer-container">
-				<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox"> ${this.label} </d2l-input-checkbox>
+				<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox" @change="${this._onCheckboxChange}"> ${this.label} </d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-input-checkbox-description"> ${this.description} </div>
 				</d2l-input-checkbox-spacer>
@@ -142,12 +135,14 @@ class CheckboxDrawer extends LitElement {
 		`;
 	}
 
-	updated(changedProperties) {
-		super.updated(changedProperties);
-		if (changedProperties.has('checked')) {
-			this._drawerChanged(this.checked, this.isFirstUpdate);
-			this._isFirstUpdate = false;
-		}
+	_onCheckboxChange(e) {
+		this.checked = e.target.checked;
+		this.dispatchEvent(new CustomEvent(
+			'd2l-checkbox-drawer-change-checked',
+			{ bubbles: true, composed: false }
+		));
+		this._drawerChanged(this.checked, this.isFirstUpdate);
+		this._isFirstUpdate = false;
 	}
 
 	async _drawerChanged(checked, isFirstUpdate) {
