@@ -126,14 +126,9 @@ class CheckboxDrawer extends LitElement {
 		};
 		return html`
 			<div class="d2l-checkbox-drawer-container">
-				<d2l-input-checkbox
-					aria-label="${ifDefined(this.ariaLabel)}"
-					class="d2l-input-checkbox"
-				>
-					${this.label}
-				</d2l-input-checkbox>
+				<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox"> ${this.label} </d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<div class="d2l-input-checkbox-description">${this.description}</div>
+					<div class="d2l-input-checkbox-description"> ${this.description} </div>
 				</d2l-input-checkbox-spacer>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-expand-collapse-content" data-state="${this._state}" @transitionend=${this._onTransitionEnd} style=${styleMap(styles)}>
