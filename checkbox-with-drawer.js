@@ -38,8 +38,8 @@ class CheckboxWithDrawer extends LitElement {
 			label: { type: String},
 			_opacity: { type: String },
 			_transform: { type: String },
-			_state: { type: String },
-			_height: { type: String }
+			_height: { type: String },
+			_state: { type: String }
 		};
 	}
 
@@ -98,9 +98,9 @@ class CheckboxWithDrawer extends LitElement {
 		this.checked = false;
 		this._opacity = opacities.HIDDEN;
 		this._transform = transforms.OUT_OF_VIEW;
+		this._height = heights.NONE;
 		this._isFirstUpdate = true;
 		this._state = states.COLLAPSED;
-		this._height = heights.NONE;
 	}
 
 	firstUpdated() {
