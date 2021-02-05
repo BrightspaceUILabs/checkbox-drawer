@@ -1,11 +1,11 @@
 {
-  "name": "@brightspace-ui-labs/checkbox-with-drawer",
+  "name": "@brightspace-ui-labs/checkbox-drawer",
   "description": "A checkbox with a description. When checked, drawer contents are revealed underneath.",
-  "repository": "https://github.com/BrightspaceUILabs/checkbox-with-drawer.git",
+  "repository": "https://github.com/BrightspaceUILabs/checkbox-drawer.git",
   "scripts": {
     "lint": "npm run lint:eslint && npm run lint:lit && npm run lint:style",
     "lint:eslint": "eslint . --ext .js,.html",
-    "lint:lit": "lit-analyzer checkbox-with-drawer.js --strict",
+    "lint:lit": "lit-analyzer checkbox-drawer.js --strict",
     "lint:style": "stylelint \"**/*.js\"",
     "start": "es-dev-server --app-index demo/index.html --node-resolve --dedupe --open --watch",
     "test": "npm run lint && npm run test:headless",
@@ -32,7 +32,7 @@
     "stylelint": "^13"
   },
   "files": [
-    "checkbox-with-drawer.js"
+    "checkbox-drawer.js"
   ],
   "publishConfig": {
     "access": "public"

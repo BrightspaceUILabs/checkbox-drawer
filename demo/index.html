@@ -5,28 +5,28 @@
 		<script src="/node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 		<script type="module">
 			import '@brightspace-ui/core/components/demo/demo-page.js';
-			import '../checkbox-with-drawer.js';
+			import '../checkbox-drawer.js';
 
-			const content = document.body.querySelector('d2l-labs-checkbox-with-drawer');
-			content.addEventListener('d2l-checkbox-with-drawer-change-checked', (e) => {
+			const content = document.body.querySelector('d2l-labs-checkbox-drawer');
+			content.addEventListener('d2l-checkbox-drawer-change-checked', (e) => {
 				console.log(content.checked)
 			});
 		</script>
-		<title>CheckboxWithDrawer</title>
+		<title>CheckboxDrawer</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta charset="UTF-8">
 	</head>
 	<body>
-		<d2l-demo-page page-title="CheckboxWithDrawer">
-			<h2>CheckboxWithDrawer</h2>
+		<d2l-demo-page page-title="CheckboxDrawer">
+			<h2>CheckboxDrawer</h2>
 			<d2l-demo-snippet>
-				<d2l-labs-checkbox-with-drawer
+				<d2l-labs-checkbox-drawer
 					label="Make this course available in Discover so Learners can self-enroll",
 					description="Inactive courses will not be included in Discover",
 					checked
 				>
 					<button>CONTENT</button><p>CONTENT</p><p>CONTENT</p><div style="margin: 20px;">MARGIN</div>
-				</d2l-labs-checkbox-with-drawer>
+				</d2l-labs-checkbox-drawer>
 				<div>PLACEHOLDER</div>
 			</d2l-demo-snippet>
 		</d2l-demo-page>

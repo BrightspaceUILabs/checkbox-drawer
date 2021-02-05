@@ -29,7 +29,7 @@ const heights = {
 	NONE: '0'
 }
 
-class CheckboxWithDrawer extends LitElement {
+class CheckboxDrawer extends LitElement {
 
 	static get properties() {
 		return {
@@ -53,7 +53,7 @@ class CheckboxWithDrawer extends LitElement {
 				display: none;
 			}
 
-			.d2l-checkbox-with-drawer-container {
+			.d2l-checkbox-drawer-container {
 				margin-bottom: 18px;
 			}
 
@@ -110,7 +110,7 @@ class CheckboxWithDrawer extends LitElement {
 		checkbox.addEventListener('change', (e) => {
 			this.checked = checkbox.checked;
 			this.dispatchEvent(new CustomEvent(
-				'd2l-checkbox-with-drawer-change-checked',
+				'd2l-checkbox-drawer-change-checked',
 				{ bubbles: true, composed: false }
 			))
 		});
@@ -128,7 +128,7 @@ class CheckboxWithDrawer extends LitElement {
 		if (checked) {
 			if (!isFirstUpdate) {
 				this.dispatchEvent(new CustomEvent(
-					'd2l-checkbox-with-drawer-expand',
+					'd2l-checkbox-drawer-expand',
 					{ bubbles: true, composed: false }
 				));
 			}
@@ -151,7 +151,7 @@ class CheckboxWithDrawer extends LitElement {
 		} else {
 			if (!isFirstUpdate) {
 				this.dispatchEvent(new CustomEvent(
-					'd2l-checkbox-with-drawer-collapse',
+					'd2l-checkbox-drawer-collapse',
 					{ bubbles: true, composed: false }
 				));
 			}
@@ -180,7 +180,7 @@ class CheckboxWithDrawer extends LitElement {
 			height: this._height
 		};
 		return html`
-			<div class="d2l-checkbox-with-drawer-container">
+			<div class="d2l-checkbox-drawer-container">
 				<d2l-input-checkbox class="d2l-input-checkbox">${this.label}</d2l-input-checkbox>
 				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 					<div class="d2l-input-checkbox-description">${this.description}</div>
@@ -205,4 +205,4 @@ class CheckboxWithDrawer extends LitElement {
 		}
 	}
 }
-customElements.define('d2l-labs-checkbox-with-drawer', CheckboxWithDrawer);
+customElements.define('d2l-labs-checkbox-drawer', CheckboxDrawer);

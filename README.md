@@ -1,6 +1,6 @@
-# @brightspace-ui-labs/checkbox-with-drawer
+# @brightspace-ui-labs/checkbox-drawer
 
-[![NPM version](https://img.shields.io/npm/v/@brightspace-ui-labs/checkbox-with-drawer.svg)](https://www.npmjs.org/package/@brightspace-ui-labs/checkbox-with-drawer)
+[![NPM version](https://img.shields.io/npm/v/@brightspace-ui-labs/checkbox-drawer.svg)](https://www.npmjs.org/package/@brightspace-ui-labs/checkbox-drawer)
 
 > Note: this is a ["labs" component](https://github.com/BrightspaceUI/guide/wiki/Component-Tiers). While functional, these tasks are prerequisites to promotion to BrightspaceUI "official" status:
 >
@@ -23,16 +23,16 @@ A checkbox with a description. When checked, drawer contents are revealed undern
 Install from NPM:
 
 ```shell
-npm install @brightspace-ui-labs/checkbox-with-drawer
+npm install @brightspace-ui-labs/checkbox-drawer
 ```
 
 ## Usage
 
 ```html
 <script type="module">
-    import '@brightspace-ui-labs/checkbox-with-drawer/checkbox-with-drawer.js';
+    import '@brightspace-ui-labs/checkbox-drawer/checkbox-drawer.js';
 </script>
-<d2l-labs-checkbox-with-drawer>My element</d2l-labs-checkbox-with-drawer>
+<d2l-labs-checkbox-drawer>My element</d2l-labs-checkbox-drawer>
 ```
 
 **Properties:**
@@ -43,7 +43,7 @@ npm install @brightspace-ui-labs/checkbox-with-drawer
 
 **Accessibility:**
 
-To make your usage of `d2l-labs-checkbox-with-drawer` accessible, use the following properties when applicable:
+To make your usage of `d2l-labs-checkbox-drawer` accessible, use the following properties when applicable:
 
 | Attribute | Description |
 |--|--|
