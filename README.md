@@ -16,7 +16,7 @@
 > - [ ] Demo page
 > - [ ] README documentation
 
-A checkbox with a description. When checked, drawer contents are revealed underneath.
+The `d2l-labs-checkbox-drawer` element can be used to get a checkbox with a description. When checked, drawer contents are revealed underneath.
 
 ## Installation
 
@@ -32,14 +32,19 @@ npm install @brightspace-ui-labs/checkbox-drawer
 <script type="module">
     import '@brightspace-ui-labs/checkbox-drawer/checkbox-drawer.js';
 </script>
-<d2l-labs-checkbox-drawer>My element</d2l-labs-checkbox-drawer>
+<d2l-labs-checkbox-drawer>
+  <p>My drawer content.</p>
+</d2l-labs-checkbox-drawer>
 ```
 
 **Properties:**
 
 | Property | Type | Description |
 |--|--|--|
-| | | |
+| `aria-label` | String | Provides context for the component. Must be used if `label` is not used. Cannot be used with `label`. |
+| `checked` | Boolean | True if the checkbox is checked. False if not checked. |
+| `description` | String | Extra information that is displayed beneath the `label`. |
+| `label` | String | Provides visible information about the component. Must be used if `aria-label` is not used. Cannot be used with `aria-label`. |
 
 **Accessibility:**
 
@@ -47,7 +52,7 @@ To make your usage of `d2l-labs-checkbox-drawer` accessible, use the following p
 
 | Attribute | Description |
 |--|--|
-| | |
+| `aria-label` | Provides context for the component. Must be used if `label` is not used. Cannot be used with `label`. |
 
 ## Developing, Testing and Contributing
 
