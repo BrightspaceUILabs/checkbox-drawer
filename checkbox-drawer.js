@@ -135,16 +135,6 @@ class CheckboxDrawer extends LitElement {
 		`;
 	}
 
-	_onCheckboxChange(e) {
-		this.checked = e.target.checked;
-		this.dispatchEvent(new CustomEvent(
-			'd2l-checkbox-drawer-change-checked',
-			{ bubbles: true, composed: false, detail: { checked: this.checked } }
-		));
-		this._drawerChanged(this.checked, this.isFirstUpdate);
-		this._isFirstUpdate = false;
-	}
-
 	async _drawerChanged(checked, isFirstUpdate) {
 		if (checked) {
 			if (!isFirstUpdate) {
@@ -192,6 +182,16 @@ class CheckboxDrawer extends LitElement {
 				}
 			}
 		}
+	}
+
+	_onCheckboxChange(e) {
+		this.checked = e.target.checked;
+		this.dispatchEvent(new CustomEvent(
+			'd2l-checkbox-drawer-change-checked',
+			{ bubbles: true, composed: false, detail: { checked: this.checked } }
+		));
+		this._drawerChanged(this.checked, this.isFirstUpdate);
+		this._isFirstUpdate = false;
 	}
 
 	_onTransitionEnd() {
