@@ -78,7 +78,7 @@ class CheckboxDrawer extends LitElement {
 		this.checked = e.target.checked;
 		this._syncExpandCollapseContent();
 		this.dispatchEvent(new CustomEvent(
-			'd2l-checkbox-drawer-change-checked',
+			'd2l-checkbox-drawer-checked-change',
 			{ bubbles: true, composed: false, detail: { checked: this.checked } }
 		));
 	}

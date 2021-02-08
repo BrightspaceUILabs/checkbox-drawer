@@ -54,6 +54,12 @@ To make your usage of `d2l-labs-checkbox-drawer` accessible, use the following p
 |--|--|
 | `aria-label` | Provides context for the component. Must be used if `label` is not used. Cannot be used with `label`. |
 
+**Events:**
+
+- `d2l-checkbox-drawer-checked-change`: dispatched when checkbox's state changes.
+- `d2l-checkbox-drawer-expand`: dispatched when the drawer starts to expand. As per the [expand collapse component](https://github.com/BrightspaceUI/core/tree/master/components/expand-collapse), the `detail` contains an `expandComplete` promise that can be waited on to determine when the content has finished expanding.
+- `d2l-checkbox-drawer-collapse`: dispatched when the drawer starts to collapse. As per the [expand collapse component](https://github.com/BrightspaceUI/core/tree/master/components/expand-collapse), the `detail` contains a `collapseComplete` promise that can be waited on to determine when the content has finished collapsing.
+
 ## Developing, Testing and Contributing
 
 After cloning the repo, run `npm install` to install dependencies.
