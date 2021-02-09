@@ -51,6 +51,10 @@ class CheckboxDrawer extends LitElement {
 		const checkbox = this.shadowRoot.querySelector('.d2l-input-checkbox');
 		checkbox.checked = this.checked;
 		this._syncExpandCollapseContent();
+
+		// set initial value of whether changes to the expand-collapse content should be ignored by the assistive technology
+		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
+		content.ariaBusy = !this.checked;
 	}
 
 	render() {
@@ -60,7 +64,7 @@ class CheckboxDrawer extends LitElement {
 				<div class="d2l-input-checkbox-description"> ${this.description} </div>
 			</d2l-input-checkbox-spacer>
 			<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-				<d2l-expand-collapse-content @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}">
+				<d2l-expand-collapse-content aria-live="polite" @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}">
 					<div class="d2l-checkbox-content-margin"></div>
 					<slot></slot>
 				</d2l-expand-collapse-content>
@@ -82,13 +86,20 @@ class CheckboxDrawer extends LitElement {
 			'd2l-checkbox-drawer-collapse',
 			{ bubbles: true, composed: false, detail: e.detail }
 		));
+
+		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
+		content.ariaBusy = "true";
 	}
 
-	_onExpandCollapseContentExpand(e) {
+	async _onExpandCollapseContentExpand(e) {
 		this.dispatchEvent(new CustomEvent(
 			'd2l-checkbox-drawer-expand',
 			{ bubbles: true, composed: false, detail: e.detail }
 		));
+
+		await e.detail.expandComplete;
+		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
+		content.ariaBusy = "false";
 	}
 
 	_syncExpandCollapseContent() {
