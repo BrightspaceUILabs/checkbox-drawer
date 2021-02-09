@@ -26,10 +26,6 @@ class CheckboxDrawer extends LitElement {
 				display: none;
 			}
 
-			.d2l-checkbox-drawer-container {
-				margin-bottom: 18px;
-			}
-
 			.d2l-input-checkbox, .d2l-input-checkbox-spacer {
 				margin-bottom: 0;
 			}
@@ -59,18 +55,16 @@ class CheckboxDrawer extends LitElement {
 
 	render() {
 		return html`
-			<div class="d2l-checkbox-drawer-container">
-				<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox" @change="${this._onCheckboxChange}"> ${this.label} </d2l-input-checkbox>
-				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<div class="d2l-input-checkbox-description"> ${this.description} </div>
-				</d2l-input-checkbox-spacer>
-				<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-					<d2l-expand-collapse-content @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}">
-						<div class="d2l-checkbox-content-margin"></div>
-						<slot></slot>
-					</d2l-expand-collapse-content>
-				</d2l-input-checkbox-spacer>
-			</div>
+			<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox" @change="${this._onCheckboxChange}"> ${this.label} </d2l-input-checkbox>
+			<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+				<div class="d2l-input-checkbox-description"> ${this.description} </div>
+			</d2l-input-checkbox-spacer>
+			<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
+				<d2l-expand-collapse-content @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}">
+					<div class="d2l-checkbox-content-margin"></div>
+					<slot></slot>
+				</d2l-expand-collapse-content>
+			</d2l-input-checkbox-spacer>
 		`;
 	}
 
