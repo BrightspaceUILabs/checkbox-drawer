@@ -77,16 +77,16 @@ class CheckboxDrawer extends LitElement {
 		));
 	}
 
-	_onExpandCollapseContentExpand(e) {
+	_onExpandCollapseContentCollapse(e) {
 		this.dispatchEvent(new CustomEvent(
-			'd2l-checkbox-drawer-expand',
+			'd2l-checkbox-drawer-collapse',
 			{ bubbles: true, composed: false, detail: e.detail }
 		));
 	}
 
-	_onExpandCollapseContentCollapse(e) {
+	_onExpandCollapseContentExpand(e) {
 		this.dispatchEvent(new CustomEvent(
-			'd2l-checkbox-drawer-collapse',
+			'd2l-checkbox-drawer-expand',
 			{ bubbles: true, composed: false, detail: e.detail }
 		));
 	}
