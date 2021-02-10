@@ -88,7 +88,7 @@ class CheckboxDrawer extends LitElement {
 		));
 
 		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
-		content.ariaBusy = "true";
+		content.ariaBusy = 'true';
 	}
 
 	async _onExpandCollapseContentExpand(e) {
@@ -99,7 +99,7 @@ class CheckboxDrawer extends LitElement {
 
 		await e.detail.expandComplete;
 		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
-		content.ariaBusy = "false";
+		content.ariaBusy = 'false';
 	}
 
 	_syncExpandCollapseContent() {
