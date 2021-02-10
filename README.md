@@ -43,7 +43,7 @@ npm install @brightspace-ui-labs/checkbox-drawer
 |--|--|--|
 | `aria-label` | String | Provides context for the component. Must be used if `label` is not used. Cannot be used with `label`. |
 | `checked` | Boolean | True if the checkbox is checked. False if not checked. |
-| `description` | String | Extra information that is displayed beneath the `label`. |
+| `description` | String | Extra information that is displayed beneath the `label`. Optionally used when `label` is used. Cannot be used with `aria-label`. |
 | `label` | String | Provides visible information about the component. Must be used if `aria-label` is not used. Cannot be used with `aria-label`. |
 
 **Accessibility:**
