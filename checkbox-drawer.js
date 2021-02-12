@@ -46,21 +46,14 @@ class CheckboxDrawer extends LitElement {
 		this.checked = false;
 	}
 
-	firstUpdated() {
-		// pass initial checked value down to the checkbox & expand/collapse component
-		const checkbox = this.shadowRoot.querySelector('.d2l-input-checkbox');
-		checkbox.checked = this.checked;
-		this._syncExpandCollapseContent();
-	}
-
 	render() {
 		return html`
-			<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" class="d2l-input-checkbox" @change="${this._onCheckboxChange}"> ${this.label} </d2l-input-checkbox>
+			<d2l-input-checkbox aria-label="${ifDefined(this.ariaLabel)}" @change="${this._onCheckboxChange}" .checked="${this.checked}" class="d2l-input-checkbox"> ${this.label} </d2l-input-checkbox>
 			<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
 				<div class="d2l-input-checkbox-description"> ${this.description} </div>
 			</d2l-input-checkbox-spacer>
 			<d2l-input-checkbox-spacer class="d2l-input-checkbox-spacer">
-				<d2l-expand-collapse-content aria-live="polite" @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}">
+				<d2l-expand-collapse-content aria-live="polite" @d2l-expand-collapse-content-expand="${this._onExpandCollapseContentExpand}" @d2l-expand-collapse-content-collapse="${this._onExpandCollapseContentCollapse}" .expanded="${this.checked}">
 					<div class="d2l-checkbox-content-margin"></div>
 					<slot></slot>
 				</d2l-expand-collapse-content>
@@ -70,7 +63,6 @@ class CheckboxDrawer extends LitElement {
 
 	_onCheckboxChange(e) {
 		this.checked = e.target.checked;
-		this._syncExpandCollapseContent();
 		this.dispatchEvent(new CustomEvent(
 			'd2l-checkbox-drawer-checked-change',
 			{ bubbles: true, composed: false, detail: { checked: this.checked } }
@@ -99,11 +91,6 @@ class CheckboxDrawer extends LitElement {
 		content.ariaBusy = 'true';
 		await e.detail.expandComplete;
 		content.ariaBusy = 'false';
-	}
-
-	_syncExpandCollapseContent() {
-		const content = this.shadowRoot.querySelector('d2l-expand-collapse-content');
-		content.expanded = this.checked;
 	}
 }
 customElements.define('d2l-labs-checkbox-drawer', CheckboxDrawer);
