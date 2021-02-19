@@ -33,10 +33,11 @@ class CheckboxDrawer extends LitElement {
 			.d2l-input-checkbox-description {
 				color: var(--d2l-color-tungsten);
 				font-size: 0.7rem;
+				line-height: 1.2rem;
 			}
 
 			.d2l-checkbox-content-margin {
-				margin-top: 18px;
+				margin-top: 0.9rem;
 			}
 		`;
 	}
